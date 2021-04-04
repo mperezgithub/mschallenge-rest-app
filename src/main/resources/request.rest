@@ -1,0 +1,9 @@
+POST
+http://127.0.0.1:8080/api/clientes/creacliente
+@Content-Type: application/json
+{
+    "nombre": "Daniel",
+    "apellido": "Peralta",
+    "edad": 41,
+    "fechaNacimiento": "15-07-1980"
+}

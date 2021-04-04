@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "237138dc-c258-483a-b83d-7ffc1d87507c",
+		"name": "Clientes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Consultar todos los Clientes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/clientes/listclientes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"clientes",
+						"listclientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Información Descriptiva de Clientes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/clientes/kpideclientes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"clientes",
+						"kpideclientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un Cliente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"nombre\": \"Arturo\",\r\n            \"apellido\": \"Maldonado\",\r\n            \"edad\": 19,\r\n            \"fechaNacimiento\": \"03-01-2002\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/clientes/creacliente",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"clientes",
+						"creacliente"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
