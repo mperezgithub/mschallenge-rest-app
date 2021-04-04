@@ -50,7 +50,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "        {\r\n            \"nombre\": \"Arturo\",\r\n            \"apellido\": \"Maldonado\",\r\n            \"edad\": 19,\r\n            \"fechaNacimiento\": \"03-01-2002\"\r\n        }",
+					"raw": "        {\r\n            \"nombre\": \"Daniel\",\r\n            \"apellido\": \"Manzano\",\r\n            \"edad\": 2,\r\n            \"fechaNacimiento\": \"03-01-2019\"\r\n        }",
 					"options": {
 						"raw": {
 							"language": "json"
