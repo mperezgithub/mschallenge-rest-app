@@ -61,4 +61,9 @@ public class ClientController {
         Client clientSaved = clientService.save(client);
         return new ResponseEntity<>(new Response<>("Se guardó exitosamente un cliente con id = " + clientSaved.getId(), List.of(clientSaved)), HttpStatus.CREATED);
     }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return new ResponseEntity<>( HttpStatus.OK.name(), HttpStatus.OK);
+    }
 }
