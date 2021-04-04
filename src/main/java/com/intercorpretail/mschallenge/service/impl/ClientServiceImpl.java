@@ -28,8 +28,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> findAll() {
-        List<Client> clientes = repository.findAll();
-        return clientes;
+        return repository.findAll();
     }
 
     @Override
@@ -38,7 +37,6 @@ public class ClientServiceImpl implements ClientService {
         List<Integer> agesList = clients.stream().map(Client::getAge).collect(Collectors.toList());
         Double average = statsUtil.calculateArithmeticMean(agesList);
         Double standardDeviation = statsUtil.calculateStandardDeviation(agesList);
-        StatsResponse<Client> response = new StatsResponse<>(average, standardDeviation, "Información descriptiva de los clientes", clients);
-        return response;
+        return new StatsResponse<>(average, standardDeviation, "Información descriptiva de los clientes", clients);
     }
 }

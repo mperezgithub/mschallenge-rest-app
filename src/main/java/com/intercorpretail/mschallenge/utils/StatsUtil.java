@@ -21,8 +21,6 @@ public class StatsUtil {
                 .mapToDouble(i -> i).average().getAsDouble();
 
         //Standard Deviation
-        double standardDeviation = Math.sqrt(variance);
-
-        return standardDeviation;
+        return Math.sqrt(variance);
     }
 }

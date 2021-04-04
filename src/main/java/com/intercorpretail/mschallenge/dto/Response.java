@@ -17,5 +17,5 @@ public class Response<T> {
     @JsonProperty("mensaje")
     private String message;
     @JsonProperty("datos")
-    private List<T> data = new ArrayList<T>();
+    private List<T> data = new ArrayList<>();
 }

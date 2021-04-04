@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class StatsResponse<T> extends Response {
+public class StatsResponse<T> extends Response<T> {
     @JsonProperty("promedioEdad")
     private Double average;
     @JsonProperty("desviacionEstandard")

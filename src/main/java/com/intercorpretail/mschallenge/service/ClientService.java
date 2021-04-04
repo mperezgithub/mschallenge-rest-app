@@ -8,5 +8,5 @@ import java.util.List;
 public interface ClientService {
     Client save(Client cliente);
     List<Client> findAll();
-    StatsResponse getStats();
+    StatsResponse<Client> getStats();
 }

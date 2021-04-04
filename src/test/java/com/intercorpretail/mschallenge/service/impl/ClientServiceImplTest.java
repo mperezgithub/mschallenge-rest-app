@@ -46,10 +46,10 @@ class ClientServiceImplTest {
         final Client result = target.save(client);
 
         assertNotNull(result);
-        assertEquals(result.getName(), "name");
-        assertEquals(result.getLastname(), "lastname");
-        assertEquals(result.getAge(), 0);
-        assertEquals(result.getDob(), expectedDob);
+        assertEquals("name", result.getName());
+        assertEquals("lastname", result.getLastname());
+        assertEquals(0, result.getAge());
+        assertEquals(expectedDob, result.getDob());
         assertTrue(Duration.between(result.getDob().toInstant(), result.getDod().toInstant()).toDays() >= 0);
         verify(mockRepository, times(1)).save(anyObject());
     }
@@ -79,7 +79,6 @@ class ClientServiceImplTest {
         verify(mockRepository, times(1)).findAll();
     }
 
-
     private List<Client> buildClientResponse() {
         List<Client> response = new ArrayList<>();
         response.add(new Client("id", "name", "lastname", 0, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime()));
@@ -93,6 +92,4 @@ class ClientServiceImplTest {
         response.setStandardDeviation(1.00d);
         return response;
     }
-
-
 }

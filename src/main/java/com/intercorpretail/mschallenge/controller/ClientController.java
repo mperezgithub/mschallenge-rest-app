@@ -34,7 +34,7 @@ public class ClientController {
     })
     @GetMapping("/listclientes")
     public ResponseEntity<Response> getAllClients() {
-        return new ResponseEntity<>(new Response("Lista de todos los clientes", clientService.findAll()), HttpStatus.OK);
+        return new ResponseEntity<Response> (new Response<Client>("Lista de todos los clientes", clientService.findAll()), HttpStatus.OK);
     }
 
 
@@ -46,8 +46,7 @@ public class ClientController {
     })
     @GetMapping("/kpideclientes")
     public ResponseEntity<StatsResponse> getKPIClients() {
-        StatsResponse response = clientService.getStats();
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(clientService.getStats(), HttpStatus.OK);
     }
 
 
@@ -58,7 +57,7 @@ public class ClientController {
             @ApiResponse(code = 500, message = "Se produjo un error interno en el servidor")
     })
     @PostMapping("/creacliente")
-    public ResponseEntity<Response> addClient(@Valid @RequestBody Client client) {
+    public ResponseEntity<Response<Client>> addClient(@Valid @RequestBody Client client) {
         Client clientSaved = clientService.save(client);
         return new ResponseEntity<>(new Response<>("Se guardó exitosamente un cliente con id = " + clientSaved.getId(), List.of(clientSaved)), HttpStatus.CREATED);
     }
