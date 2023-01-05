@@ -1,5 +1,6 @@
 package com.intercorpretail.mschallenge.controller;
 
+import com.intercorpretail.mschallenge.dto.ClientDTO;
 import com.intercorpretail.mschallenge.dto.Response;
 import com.intercorpretail.mschallenge.dto.StatsResponse;
 import com.intercorpretail.mschallenge.service.ClientService;
@@ -8,23 +9,25 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import model.Client;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/clientes")
-@RequiredArgsConstructor
 public class ClientController {
 
-    private final ClientService clientService;
+    @Autowired
+    private ClientService clientService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @ApiOperation(value = "Lista todos los Clientes", response = Response.class)
     @ApiResponses(value = {
@@ -34,7 +37,11 @@ public class ClientController {
     })
     @GetMapping("/listclientes")
     public ResponseEntity<Response> getAllClients() {
-        return new ResponseEntity<Response> (new Response<Client>("Lista de todos los clientes", clientService.findAll()), HttpStatus.OK);
+        List<ClientDTO> clientDTOList = clientService.findAll()
+                .stream()
+                .map(post -> modelMapper.map(post, ClientDTO.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<Response>(new Response<ClientDTO>("Lista de todos los clientes", clientDTOList), HttpStatus.OK);
     }
 
 
@@ -57,13 +64,15 @@ public class ClientController {
             @ApiResponse(code = 500, message = "Se produjo un error interno en el servidor")
     })
     @PostMapping("/creacliente")
-    public ResponseEntity<Response<Client>> addClient(@Valid @RequestBody Client client) {
+    public ResponseEntity<Response<ClientDTO>> addClient(@Valid @RequestBody ClientDTO clientDTO) {
+        // convert DTO to entity
+        Client client = modelMapper.map(clientDTO, Client.class);
         Client clientSaved = clientService.save(client);
-        return new ResponseEntity<>(new Response<>("Se guardó exitosamente un cliente con id = " + clientSaved.getId(), List.of(clientSaved)), HttpStatus.CREATED);
+        return new ResponseEntity<>(new Response<>("Se guardó exitosamente un cliente con id = " + clientSaved.getId(), List.of(clientDTO)), HttpStatus.CREATED);
     }
 
     @GetMapping("/health")
     public ResponseEntity<String> health() {
-        return new ResponseEntity<>( HttpStatus.OK.name(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK.name(), HttpStatus.OK);
     }
 }
