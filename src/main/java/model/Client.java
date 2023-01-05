@@ -24,11 +24,11 @@ public class Client {
     @Id
     private String id;
 
-    @NotBlank(message = "nombre no puede estar en blanco")
+    @NotBlank(message = "Nombre no puede estar en blanco")
     @JsonProperty("nombre")
     private String name;
 
-    @NotBlank(message = "apellido no puede estar en blanco")
+    @NotBlank(message = "Apellido no puede estar en blanco")
     @JsonProperty("apellido")
     private String lastname;
 
@@ -39,7 +39,7 @@ public class Client {
     private int age;
 
     @JsonProperty("fechaNacimiento")
-    @NotNull(message="fecha de nacimiento no puede ser nula")
+    @NotNull(message="Fecha de nacimiento no puede ser nula")
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date dob;
 
