@@ -2,11 +2,11 @@ package com.intercorpretail.mschallenge.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intercorpretail.mschallenge.service.ClientService;
+import jdk.jfr.ContentType;
 import model.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
@@ -25,14 +26,16 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = ClientController.class)
 class ClientControllerTest {
 
     @MockBean
-    private ClientService mockClientService;
+    private ClientService clientService;
 
     @MockBean
     ModelMapper modelMapper;
@@ -51,14 +54,16 @@ class ClientControllerTest {
 
     @Test
     void testGetAllClients() throws Exception {
-        when(mockClientService.findAll()).thenReturn(buildClientResponse());
+        when(clientService.findAll()).thenReturn(buildClientResponse());
         mockMvc.perform(MockMvcRequestBuilders.get("/api/clientes/listclientes"))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje").value("Lista de todos los clientes"));
     }
 
     @Test
     void testGetKPIClients() throws Exception {
-        when(mockClientService.findAll()).thenReturn(buildClientResponse());
+        when(clientService.findAll()).thenReturn(buildClientResponse());
         mockMvc.perform(MockMvcRequestBuilders.get("/api/clientes/listclientes"))
                 .andExpect(status().is2xxSuccessful());
     }
@@ -66,7 +71,7 @@ class ClientControllerTest {
     @Test
     void testAddClient() throws Exception {
         Client client = buildClient();
-        when(mockClientService.save(any())).thenReturn(client);
+        when(clientService.save(any())).thenReturn(client);
         mockMvc.perform(post("/api/clientes/creacliente")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(client)))

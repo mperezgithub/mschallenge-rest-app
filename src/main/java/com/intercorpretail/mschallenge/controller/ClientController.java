@@ -7,7 +7,6 @@ import com.intercorpretail.mschallenge.service.ClientService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.RequiredArgsConstructor;
 import model.Client;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +64,6 @@ public class ClientController {
     })
     @PostMapping("/creacliente")
     public ResponseEntity<Response<ClientDTO>> addClient(@Valid @RequestBody ClientDTO clientDTO) {
-        // convert DTO to entity
         Client client = modelMapper.map(clientDTO, Client.class);
         Client clientSaved = clientService.save(client);
         return new ResponseEntity<>(new Response<>("Se guardó exitosamente un cliente con id = " + clientSaved.getId(), List.of(clientDTO)), HttpStatus.CREATED);
