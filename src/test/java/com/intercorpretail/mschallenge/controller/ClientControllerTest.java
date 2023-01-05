@@ -79,6 +79,14 @@ class ClientControllerTest {
                 .andExpect(status().is2xxSuccessful());
     }
 
+    @Test
+    void testStatus() throws Exception {
+        Client client = buildClient();
+        when(clientService.save(any())).thenReturn(client);
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/clientes/status"))
+                .andExpect(status().is2xxSuccessful());
+    }
+
     private List<Client> buildClientResponse() {
         List<Client> response = new ArrayList<>();
         response.add(new Client("id", "name", "lastname", 0, new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime(), new GregorianCalendar(2019, Calendar.JANUARY, 1).getTime()));

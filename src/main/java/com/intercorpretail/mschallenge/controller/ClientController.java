@@ -73,4 +73,9 @@ public class ClientController {
     public ResponseEntity<String> health() {
         return new ResponseEntity<>(HttpStatus.OK.name(), HttpStatus.OK);
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<String> status() {
+        return new ResponseEntity<>("El Servicio está funcionando correctamente", HttpStatus.OK);
+    }
 }
